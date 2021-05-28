@@ -2,6 +2,10 @@
 
 Convert Powershell and/or Shell scripts to AWS SSM documents.
 
+## Features
+
+This plugin is capable of generating both JSON and YAML AWS SSM Documents from PowerShell and/or Shell scripts.
+
 ## Usage
 
 1. Open a PowerShell or Shell script of your choice
@@ -11,9 +15,7 @@ Convert Powershell and/or Shell scripts to AWS SSM documents.
     - "ConvertTo-SSM: Create YAML document"
 4. Click desired conversion option
 
-## Features
-
-This plugin is capable of generating both JSON and YAML AWS SSM Documents from PowerShell and/or Shell scripts.
+## Instructions
 
 ### PowerShell To JSON SSM Documnet
 
