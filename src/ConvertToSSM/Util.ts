@@ -24,9 +24,19 @@ export function openNewFile(content: string, language: string = 'json') {
     });
 }
 
-export function validate(languageId: string): boolean {
+export function validateScriptType(languageId: string): boolean {
   if (!(['powershell', 'shellscript'].includes(languageId))) {
     vscode.window.showErrorMessage('Only PowerShell and Shell scripts supported :(');
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+export function validateDocumentType(languageId: string): boolean {
+  if (!(['json', 'yaml'].includes(languageId))) {
+    vscode.window.showErrorMessage('Only JSON and YAML SSM documents supported :(');
     return false;
   }
   else {

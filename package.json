@@ -18,7 +18,8 @@
 	],
 	"activationEvents": [
 		"onCommand:convertto-ssm.converttossmjson",
-		"onCommand:convertto-ssm.converttoyaml"
+		"onCommand:convertto-ssm.converttoyaml",
+		"onCommand:convertto-ssm.convertfromssm"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -31,6 +32,11 @@
 			{
 				"command": "convertto-ssm.converttoyaml",
 				"title": "Create YAML document",
+				"category": "ConvertTo-SSM"
+			},
+			{
+				"command": "convertto-ssm.convertfromssm",
+				"title": "Get script from AWS SSM document",
 				"category": "ConvertTo-SSM"
 			}
 		]

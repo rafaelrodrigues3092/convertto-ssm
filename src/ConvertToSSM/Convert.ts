@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { defaultDoc, getDocumentIndent, openNewFile, validate, DocumentStructure } from './Util';
+import { defaultDoc, getDocumentIndent, openNewFile, validateScriptType, DocumentStructure } from './Util';
 const yaml = require('js-yaml');
 
 function toJson(root: DocumentStructure, script: string[]): string {
@@ -53,7 +53,7 @@ export function ssmConvert(target: string) {
   //CRLF = 2
   let eol = vscode.window.activeTextEditor?.document.eol ? vscode.window.activeTextEditor.document.eol : 2;
 
-  if (validate(languageid)) {
+  if (validateScriptType(languageid)) {
     if (content === null || content === "") {
       openNewFile("");
       return;
