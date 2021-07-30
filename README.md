@@ -15,6 +15,14 @@ This plugin is capable of generating both JSON and YAML AWS SSM Documents from P
     - "ConvertTo-SSM: Create YAML document"
 4. Click desired conversion option
 
+## Configurations
+
+- EnableAutoCopyToClipboard
+    When enabled, the SSM document output is automatically copied to the clipboard
+
+- EnableCopyRunCommandOnly
+    When enabled alongside EnableAutoCopyToClipboard, it copies the 'RunCommand' section of the SSM command only
+
 ## Instructions
 
 ### PowerShell To JSON SSM Documnet
