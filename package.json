@@ -1,0 +1,77 @@
+{
+	"name": "convertto-ssm",
+	"displayName": "Convert To AWS SSM",
+	"description": "Convert Powershell and Shell scripts to AWS SSM documents",
+	"publisher": "rafaelrodrigues",
+	"version": "0.0.5",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rafaelrodrigues3092/convertto-ssm"
+	},
+	"license": "MIT",
+	"icon": "icon.ico",
+	"engines": {
+		"vscode": "^1.56.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:convertto-ssm.converttossmjson",
+		"onCommand:convertto-ssm.converttoyaml"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "convertto-ssm.converttossmjson",
+				"title": "Create JSON document",
+				"category": "ConvertTo-SSM"
+			},
+			{
+				"command": "convertto-ssm.converttoyaml",
+				"title": "Create YAML document",
+				"category": "ConvertTo-SSM"
+			}
+		],
+		"configuration": {
+			"title": "ConvertTo-SSM",
+			"properties": {
+				"convertto-ssm.EnableAutoCopyToClipboard": {
+					"type": "boolean",
+					"default": false,
+					"description": "When enabled, the output document will be automatically added to the clipboard"
+				},
+				"convertto-ssm.EnableCopyRunCommandOnly": {
+					"type": "boolean",
+					"default": false,
+					"description": "When Auto-Copy to clipboard is enabled, set this property to add only the contents of RunCommand to the clipboard rather than the whole document"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.56.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.0.4",
+		"@types/node": "^12.11.7",
+		"eslint": "^7.19.0",
+		"@typescript-eslint/eslint-plugin": "^4.14.1",
+		"@typescript-eslint/parser": "^4.14.1",
+		"glob": "^7.1.6",
+		"mocha": "^8.2.1",
+		"typescript": "^4.1.3",
+		"vscode-test": "^1.5.0"
+	},
+	"dependencies": {
+		"js-yaml": "^4.1.0"
+	}
+}
