@@ -3,7 +3,7 @@
 	"displayName": "Convert To AWS SSM",
 	"description": "Convert Powershell and Shell scripts to AWS SSM documents",
 	"publisher": "rafaelrodrigues",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/rafaelrodrigues3092/convertto-ssm"
@@ -33,7 +33,22 @@
 				"title": "Create YAML document",
 				"category": "ConvertTo-SSM"
 			}
-		]
+		],
+		"configuration": {
+			"title": "ConvertTo-SSM",
+			"properties": {
+				"convertto-ssm.EnableAutoCopyToClipboard": {
+					"type": "boolean",
+					"default": false,
+					"description": "When enabled, the output document will be automatically added to the clipboard"
+				},
+				"convertto-ssm.EnableCopyRunCommandOnly": {
+					"type": "boolean",
+					"default": false,
+					"description": "When Auto-Copy to clipboard is enabled, set this property to add only the contents of RunCommand to the clipboard rather than the whole document"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

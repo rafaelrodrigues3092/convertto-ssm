@@ -12,6 +12,38 @@ export function getDocumentIndent(): number {
   return 4;
 }
 
+
+function getExtensionConfig(): any {
+  let extensionConfig = vscode.workspace.getConfiguration('convertto-ssm');
+  if (extensionConfig) {
+    return extensionConfig;
+  }
+  return {};
+}
+
+export function isAutoCopyEnabled(): boolean {
+  let extensionConfig = getExtensionConfig();
+  if (extensionConfig && extensionConfig.get('EnableAutoCopyToClipboard')) { //if insert spaces is true
+    let autoCopyEnabled = extensionConfig.get('EnableAutoCopyToClipboard') ;
+    if (autoCopyEnabled && typeof autoCopyEnabled === 'boolean'){
+      return autoCopyEnabled;
+    }
+  }
+  return false;
+}
+
+export function copyRunCommandOnly(): boolean {
+  let extensionConfig = getExtensionConfig();
+  if (extensionConfig && extensionConfig.get('EnableCopyRunCommandOnly')) { //if insert spaces is true
+    let copyRunCmd = extensionConfig.get('EnableCopyRunCommandOnly') ;
+    if (copyRunCmd && typeof copyRunCmd === 'boolean'){
+      return copyRunCmd;
+    }
+  }
+  return false;
+}
+
+
 export function openNewFile(content: string, language: string = 'json') {
   vscode.workspace.openTextDocument({
     language: language
@@ -22,6 +54,10 @@ export function openNewFile(content: string, language: string = 'json') {
         editBuilder.insert(new vscode.Position(0, 0), content);
       });
     });
+}
+
+export function copyToClipboard(content: string){
+  vscode.env.clipboard.writeText(content);
 }
 
 export function validate(languageId: string): boolean {
