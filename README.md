@@ -20,11 +20,11 @@ It does not support SSM documents with multiple steps.
 
 ## Configurations
 
-- EnableAutoCopyToClipboard
-    When enabled, the SSM document output is automatically copied to the clipboard
+- *EnableAutoCopyToClipboard*
+    - When enabled, the SSM document output is automatically copied to the clipboard
 
-- EnableCopyRunCommandOnly
-    When enabled alongside EnableAutoCopyToClipboard, it copies the 'RunCommand' section of the SSM command only (supported only on conversions from a script to SSM document)
+- *EnableCopyRunCommandOnly*
+    - When enabled alongside EnableAutoCopyToClipboard, it copies the 'RunCommand' section of the SSM command only (supported only on conversions from a script to SSM document)
 
 ## Instructions
 
