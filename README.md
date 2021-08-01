@@ -5,6 +5,8 @@ Convert Powershell and/or Shell scripts to AWS SSM documents.
 ## Features
 
 This plugin is capable of generating both JSON and YAML AWS SSM Documents from PowerShell and/or Shell scripts.
+It is also capable of retrieving the script back from an SSM document.
+It does not support SSM documents with multiple steps.
 
 ## Usage
 
@@ -13,6 +15,7 @@ This plugin is capable of generating both JSON and YAML AWS SSM Documents from P
 3. Search for "ConvertTo-SSM", and two options will appear
     - "ConvertTo-SSM: Create JSON document"
     - "ConvertTo-SSM: Create YAML document"
+    - "ConvertTo-SSM: Get script from AWS SSM document"
 4. Click desired conversion option
 
 ## Configurations
@@ -21,7 +24,7 @@ This plugin is capable of generating both JSON and YAML AWS SSM Documents from P
     When enabled, the SSM document output is automatically copied to the clipboard
 
 - EnableCopyRunCommandOnly
-    When enabled alongside EnableAutoCopyToClipboard, it copies the 'RunCommand' section of the SSM command only
+    When enabled alongside EnableAutoCopyToClipboard, it copies the 'RunCommand' section of the SSM command only (supported only on conversions from a script to SSM document)
 
 ## Instructions
 
