@@ -2,7 +2,7 @@
 	"name": "convertto-ssm",
 	"displayName": "Convert To AWS SSM",
 	"description": "Convert Powershell and Shell scripts to AWS SSM documents",
-	"publisher": "rafaelrodrigues",
+	"publisher": "RafaelRodrigues",
 	"version": "1.0.0",
 	"repository": {
 		"type": "git",
