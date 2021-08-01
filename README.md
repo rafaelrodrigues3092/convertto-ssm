@@ -34,15 +34,15 @@ It does not support SSM documents with multiple steps.
 
 ### Shell script To JSON SSM Documnet
 
-![Shell to Json](./gifs/ConvertShellToJson.gif)
+![Shell to Json](https://github.com/rafaelrodrigues3092/convertto-ssm/tree/master/gifs/ConvertShellToJson.gif)
 
 ### PowerShell to YAML SSM document
 
-![PowerShell to Json](./gifs/ConvertPowerShellToYaml.gif)
+![PowerShell to Json](https://github.com/rafaelrodrigues3092/convertto-ssm/tree/master/gifs/ConvertPowerShellToYaml.gif)
 
 ### Shell script to YAML SSM document
 
-![Shell to Json](./gifs/ConvertShellToYaml.gif)
+![Shell to Json](https://github.com/rafaelrodrigues3092/convertto-ssm/tree/master/gifs/ConvertShellToYaml.gif)
 
 ## Known Issues
 
@@ -50,5 +50,5 @@ N/A
 
 ## Release Notes
 
-[CHANGELOG](./CHANGELOG.md)
+[CHANGELOG](https://github.com/rafaelrodrigues3092/convertto-ssm/blob/master/CHANGELOG.md)
 
