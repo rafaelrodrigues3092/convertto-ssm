@@ -2,6 +2,10 @@
 
 Convert Powershell and/or Shell scripts to AWS SSM documents.
 
+## VS Marketplace
+
+<https://marketplace.visualstudio.com/items?itemName=RafaelRodrigues.convertto-ssm>
+
 ## Features
 
 This plugin is capable of generating both JSON and YAML AWS SSM Documents from PowerShell and/or Shell scripts.
