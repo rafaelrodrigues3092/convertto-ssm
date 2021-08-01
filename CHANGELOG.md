@@ -17,3 +17,11 @@ All notable changes to the "convertto-ssm" extension will be documented in this 
 ## 0.0.4 Unreleased
 
 - Added logic to handle different line endings
+
+## 0.0.5 Unreleased
+
+- Added extension configurations
+
+## 0.0.6 Unreleased
+
+- Added conversion from SSM doc back to script
