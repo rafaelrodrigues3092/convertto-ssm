@@ -50,6 +50,5 @@ N/A
 
 ## Release Notes
 
-### 0.0.4
+[CHANGELOG](./CHANGELOG.md)
 
-Pre-release
