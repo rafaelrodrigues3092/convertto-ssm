@@ -61,7 +61,7 @@ export function getScript() {
           }
           else if (step['action'] === 'aws:runPowerShellScript') {
             target = 'powershell';
-            console.log(step.inputs.runCommand)
+            console.log(step.inputs.runCommand);
             finalScript = step.inputs.runCommand?.join('\r\n');
           }
           else {
