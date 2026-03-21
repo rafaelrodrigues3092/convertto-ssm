@@ -13,34 +13,20 @@ export function getDocumentIndent(): number {
 }
 
 
-function getExtensionConfig(): any {
-  let extensionConfig = vscode.workspace.getConfiguration('convertto-ssm');
-  if (extensionConfig) {
-    return extensionConfig;
-  }
-  return {};
+function getExtensionConfig(): vscode.WorkspaceConfiguration {
+  return vscode.workspace.getConfiguration('convertto-ssm');
 }
 
 export function isAutoCopyEnabled(): boolean {
-  let extensionConfig = getExtensionConfig();
-  if (extensionConfig && extensionConfig.get('EnableAutoCopyToClipboard')) { //if insert spaces is true
-    let autoCopyEnabled = extensionConfig.get('EnableAutoCopyToClipboard') ;
-    if (autoCopyEnabled && typeof autoCopyEnabled === 'boolean'){
-      return autoCopyEnabled;
-    }
-  }
-  return false;
+  const extensionConfig = getExtensionConfig();
+  const autoCopyEnabled = extensionConfig.get<boolean>('EnableAutoCopyToClipboard');
+  return autoCopyEnabled === true;
 }
 
 export function copyRunCommandOnly(): boolean {
-  let extensionConfig = getExtensionConfig();
-  if (extensionConfig && extensionConfig.get('EnableCopyRunCommandOnly')) { //if insert spaces is true
-    let copyRunCmd = extensionConfig.get('EnableCopyRunCommandOnly') ;
-    if (copyRunCmd && typeof copyRunCmd === 'boolean'){
-      return copyRunCmd;
-    }
-  }
-  return false;
+  const extensionConfig = getExtensionConfig();
+  const copyRunCmd = extensionConfig.get<boolean>('EnableCopyRunCommandOnly');
+  return copyRunCmd === true;
 }
 
 
@@ -91,12 +77,12 @@ export function validateDocumentType(languageId: string): boolean {
   }
 }
 
-
+/* eslint-disable @typescript-eslint/naming-convention */
 export interface DocumentStructure {
   schemaVersion: string;
   description: string;
-  parameters: Object;
-  mainSteps: [{
+  parameters: Record<string, unknown>;
+  mainSteps: Array<{
     precondition: {
       StringEquals: string[];
     };
@@ -106,10 +92,118 @@ export interface DocumentStructure {
       workingDirectory: string;
       timeoutSeconds: string;
       runCommand?: string[];
-    }
-  }];
+    };
+  }>;
+}
+/* eslint-enable @typescript-eslint/naming-convention */
+
+function isPlainObject(value: unknown): value is Record<string, unknown> {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
 }
 
+function hasUnsafeKey(value: unknown): boolean {
+  if (Array.isArray(value)) {
+    return value.some(item => hasUnsafeKey(item));
+  }
+
+  if (!isPlainObject(value)) {
+    return false;
+  }
+
+  return Object.keys(value).some(key => (
+    key === '__proto__'
+    || key === 'constructor'
+    || key === 'prototype'
+    || hasUnsafeKey(value[key])
+  ));
+}
+
+export function sanitizeDocument(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(item => sanitizeDocument(item));
+  }
+
+  if (!isPlainObject(value)) {
+    return value;
+  }
+
+  const sanitized = Object.create(null) as Record<string, unknown>;
+  Object.entries(value).forEach(([key, nestedValue]) => {
+    if (!['__proto__', 'constructor', 'prototype'].includes(key)) {
+      sanitized[key] = sanitizeDocument(nestedValue);
+    }
+  });
+
+  return sanitized;
+}
+
+/* eslint-disable @typescript-eslint/naming-convention */
+export function parseDocumentStructure(value: unknown): DocumentStructure | undefined {
+  if (hasUnsafeKey(value)) {
+    return undefined;
+  }
+
+  const document = sanitizeDocument(value);
+  if (!isPlainObject(document)) {
+    return undefined;
+  }
+
+  const { schemaVersion, description, parameters, mainSteps } = document;
+  if (typeof schemaVersion !== 'string' || typeof description !== 'string' || !isPlainObject(parameters) || !Array.isArray(mainSteps)) {
+    return undefined;
+  }
+
+  const parsedSteps = mainSteps.map(step => {
+    if (!isPlainObject(step) || !isPlainObject(step.precondition) || !Array.isArray(step.precondition.StringEquals) || !isPlainObject(step.inputs)) {
+      return undefined;
+    }
+
+    if (typeof step.action !== 'string' || typeof step.name !== 'string' || typeof step.inputs.workingDirectory !== 'string' || typeof step.inputs.timeoutSeconds !== 'string') {
+      return undefined;
+    }
+
+    const runCommand = step.inputs.runCommand;
+    if (runCommand !== undefined && (!Array.isArray(runCommand) || !runCommand.every(line => typeof line === 'string'))) {
+      return undefined;
+    }
+
+    if (!step.precondition.StringEquals.every(value => typeof value === 'string')) {
+      return undefined;
+    }
+
+    return {
+      precondition: {
+        StringEquals: [...step.precondition.StringEquals]
+      },
+      action: step.action,
+      name: step.name,
+      inputs: {
+        workingDirectory: step.inputs.workingDirectory,
+        timeoutSeconds: step.inputs.timeoutSeconds,
+        runCommand: runCommand ? [...runCommand] : undefined
+      }
+    };
+  });
+
+  if (parsedSteps.some(step => step === undefined)) {
+    return undefined;
+  }
+
+  return {
+    schemaVersion,
+    description,
+    parameters: { ...parameters },
+    mainSteps: parsedSteps as DocumentStructure['mainSteps']
+  };
+}
+/* eslint-enable @typescript-eslint/naming-convention */
+
+/* eslint-disable @typescript-eslint/naming-convention */
 export const defaultDoc: DocumentStructure = {
   "schemaVersion": "2.2",
   "description": "Document Description",
@@ -138,3 +232,4 @@ export const defaultDoc: DocumentStructure = {
     }
   ]
 };
+/* eslint-enable @typescript-eslint/naming-convention */
