@@ -98,6 +98,7 @@ export interface DocumentStructure {
   parameters: Object;
   mainSteps: [{
     precondition: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       StringEquals: string[];
     };
     action: string;
@@ -123,6 +124,7 @@ export const defaultDoc: DocumentStructure = {
   "mainSteps": [
     {
       "precondition": {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         "StringEquals": [
           "platformType",
           "Windows"
