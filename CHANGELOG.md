@@ -9,3 +9,7 @@ All notable changes to the "convertto-ssm" extension will be documented in this 
 ## 1.1.0
 
 - npm packages upgrade
+
+## 1.1.1
+
+- Update NPM packages to address security vulnerabilities
